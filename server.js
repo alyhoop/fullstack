@@ -1,8 +1,20 @@
 //Load Node Modules
 var express = require('express');
+require('dotenv').config();
 //Initialize express
-var app = express();
-//Render static files
-app.use(express.static('public'));
-//Port website will run on
-app.listen(8080);
+const app = express();
+const port = process.env.PORT || 5000
+
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
+app.use((req, res, next) => {
+  res.send('Welcome to Express');
+});
+
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`)
+});
